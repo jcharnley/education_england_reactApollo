@@ -167,7 +167,7 @@ const CourseList: React.FunctionComponent<CourseListProps> = () => {
                             after: endCursor
                         },
                         updateQuery: (prevResult: any, { fetchMoreResult }) => {
-                            if (fetchMoreResult.closeTo.pageInfo.hasNextPage === true) {
+                            if (prevResult.closeTo.pageInfo.hasNextPage === true) {
                                 fetchMoreResult.closeTo.nodes = [
                                     ...prevResult.closeTo.nodes,
                                     ...fetchMoreResult.closeTo.nodes
