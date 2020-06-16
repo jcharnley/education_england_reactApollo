@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {  useEffect } from "react"
+import { useEffect } from "react"
 import { useQuery } from '@apollo/react-hooks';
 import { withRouter } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -14,10 +14,9 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { Alert } from '@material-ui/lab';
 
 
-
 const GET_VEUNES = gql`
-   query ($lng: Float,$lat: Float, $radius: Float, $courseQualLvl: String, $sSsaTier1Desc: String){
- closeTo(lng: $lng, lat:$lat, radius: $radius) {
+   query ($lng: Float,$lat: Float, $radius: Float, $after: Cursor){
+ closeTo(lng: $lng, lat:$lat, radius: $radius, first: 3, after: $after) {
     nodes {
       venueName
       venueId
@@ -28,7 +27,7 @@ const GET_VEUNES = gql`
         town
         website
         town
-        combinedCoursesByProviderId(condition: {courseQualLvl: $courseQualLvl, sSsaTier1Desc: $sSsaTier1Desc }) {
+        combinedCoursesByProviderId {
           nodes {
             courseQualLvl
             providerCourseTitle
@@ -43,7 +42,11 @@ const GET_VEUNES = gql`
       }
     }
     totalCount
-  }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+ }
 }
 `;
 
@@ -58,13 +61,14 @@ const CourseList: React.FunctionComponent<CourseListProps> = () => {
     let lng: number = parseFloat(queryParmeterSplit[3]);
     let currentDistance: number = parseFloat(queryParmeterSplit[4]);
 
-    const { loading, error, data, } = useQuery(GET_VEUNES, {
+
+    const { loading, error, data, fetchMore } = useQuery(GET_VEUNES, {
         variables: {
             lat: lat,
             lng: lng,
-            radius: currentDistance
+            radius: currentDistance,
+            after: null
         }
-
     });
 
     useEffect(() => {
@@ -87,10 +91,10 @@ const CourseList: React.FunctionComponent<CourseListProps> = () => {
 
 
     const results: any = data.closeTo;
-    const providerTotalCount: number = results.totalCount
+    const providerTotalCount: number = results.totalCount;
     let courseTotalCount = results.nodes.map((courses: any): number => {
         let sum = 0;
-        sum = courses.cProviderByProviderId.combinedCoursesByProviderId.totalCount
+        sum = courses.cProviderByProviderId.combinedCoursesByProviderId.totalCount;
         return sum
     }).reduce((sum: number, total: number): number => {
         return sum + total;
@@ -155,6 +159,30 @@ const CourseList: React.FunctionComponent<CourseListProps> = () => {
                 )
 
             })}
+            <div style={{ display: 'flex', justifyContent: 'center', padding: '1.25rem' }}>
+                <Button variant="outlined" onClick={(): void => {
+                    let endCursor = results.pageInfo.endCursor;
+                    fetchMore({
+                        variables: {
+                            after: endCursor
+                        },
+                        updateQuery: (prevResult: any, { fetchMoreResult }) => {
+                            if (fetchMoreResult.closeTo.pageInfo.hasNextPage === true) {
+                                fetchMoreResult.closeTo.nodes = [
+                                    ...prevResult.closeTo.nodes,
+                                    ...fetchMoreResult.closeTo.nodes
+                                ];
+                                return fetchMoreResult;
+                            } else {
+                                return null;
+                            }
+
+                        }
+                    })
+                }} color="primary">
+                    Load More
+            </Button>
+            </div>
         </Layout >
     );
 }
