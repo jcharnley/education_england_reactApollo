@@ -5,6 +5,11 @@ export const SearchContainer = styled.div`
 	padding: 1.25rem 0.6rem;
 	padding: 2.25rem 0.6rem;
 	margin: 1.25rem;
+	background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px;
+    color: #3D69C4;
+}
 `;
 export const SearchFields = styled.div`
 	display: flex;

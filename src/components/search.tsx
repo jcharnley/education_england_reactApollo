@@ -42,7 +42,7 @@ const Search: React.FunctionComponent<SearchProps> = ({ history }) => {
         if (data.status !== 'OK') {
             setValidaton(false);
         } else {
-            let countryValidation = await data.results[0].address_components.find((find: any) => find.long_name === 'England' || find.long_name === 'Scotland' || find.long_name === 'Wales');
+            let countryValidation = await data.results[0].address_components.find((find: any) => find.long_name === 'England' || find.long_name === 'Scotland' || find.long_name === 'Wales' || find.long_name === 'Northern Ireland');
             if (countryValidation === undefined) {
                 setValidaton(false);
             } else {
