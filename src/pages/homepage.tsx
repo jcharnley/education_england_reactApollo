@@ -14,7 +14,7 @@ interface HomePageProps {
 const HomePage: React.FunctionComponent<HomePageProps> = (props) => {
     return (
         <Layout>
-            <SEO title="HOME" />
+            <SEO title="Adult Course Finder" />
             <Header pageTitle="Adult Course Finder" pageDescription="Find Courses near you!" />
             <article style={{padding:' 1.5rem 1rem'}}>Search for adult community learning, adult further education, apprenticeships courses and courses which are co-funded by the European Social Fund, and course that are aimed at people aged 16 to 18
             <br/>

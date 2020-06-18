@@ -103,7 +103,7 @@ const CourseList: React.FunctionComponent<CourseListProps> = () => {
     return (
         <Layout>
             {/* {!isFiltersOpen ? null : <Filters isFiltersOpen={isFiltersOpen} refetch={refetch}></Filters>} */}
-            <SEO title={"COURSES"} description={"Number of courses by provider"} />
+            <SEO title={"COURSES"} description={"List courses by distance using users postcode, Venues and Providers both shown within one card. Click on an individual course for more information or click to view all courses by the venue"} />
             <Header pageTitle={"Courses near you"}></Header>
             <SubNav>
                 <Button variant="outlined" onClick={(): void => history.goBack()}>Back</Button>

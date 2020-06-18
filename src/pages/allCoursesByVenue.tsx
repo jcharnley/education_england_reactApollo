@@ -72,8 +72,8 @@ const AllCoursesByVenue: React.FunctionComponent<CourseListProps> = () => {
 
   return (
     <Layout>
-      <SEO title={"All Course"} description={"List of all courses by Venue"} />
-      <Header pageTitle={"All Courses"}></Header>
+      <SEO title={"All courses by venue"} description={"List of all courses available by venue"} />
+      <Header pageTitle={"Courses by Venue"}></Header>
       <SubNav>
         <Button variant="outlined" onClick={(): void => history.goBack()}>Back</Button>
         <Button variant="outlined" onClick={(): void => {

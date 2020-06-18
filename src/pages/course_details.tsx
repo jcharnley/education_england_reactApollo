@@ -187,8 +187,8 @@ const CourseDetails: React.FunctionComponent<CourseListProps> = () => {
     const courseOppResult : JSX.Element = oOpportunitiesDetails(courseOpp);
     return (
         <Layout>
-            <SEO title={"COURSES"} description={"Number of courses by provider"} />
-            <Header pageTitle={"Course Details"}></Header>
+            <SEO title={"Course Information"} description={"Further information on selected course including Summary, Qualification (title, type, level), Entry Requirements, Tuition and Fees, Assessment Method, Timings and more"} />
+            <Header pageTitle={"Course Information"}></Header>
             <SubNav>
                 <Button variant="outlined" onClick={() : void => history.goBack()}>Back</Button>
                 {/* <Button variant="outlined" onClick={() => {
